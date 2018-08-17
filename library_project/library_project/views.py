@@ -16,11 +16,8 @@ def register(request):
 			user = authenticate(username=username, password=password)
 			if user:
 				login(request, user)
-            # return redirect('library_app:index')
-			return redirect('http://localhost:8000/') # return HttpResponse('that did work')
+			return redirect('library_app:index')
 		else:
 			return HttpResponse('Invalid form')
-	context = {
-		'form': UserCreationForm()
-	}
+	context = {'form': UserCreationForm()}
 	return render(request, 'registration/register.html', context)
