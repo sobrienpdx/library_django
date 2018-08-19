@@ -2,18 +2,21 @@
 
 
 
+{% block content %}
 
-{% for book in my_checkouts %}
-<h1>{{user_info}}</h1>
+<h1>Hello {{username}}</h1>
+<h4>You have the following books checked out:</h4>
 <ul>
-	<h4>You have the following books checked out:</h4>
-	<li> <h5>Title: {{book.title}}</h5>
-	<p> Author: {{book.author}}</p>
-</li>
+	{% for book in my_checkouts %}
+	<li>
+		<h5>Title: {{book.title}}</h5>
+		<p> Author: {{book.author}}</p>
+	</li>
+	{% endfor %}
 </ul>
-{% endfor %}
 
 
-{% endfor %}
+
+
 
 {% endblock %}

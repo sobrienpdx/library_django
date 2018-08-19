@@ -9,7 +9,7 @@ def index(request):
 	context = {'book_list': book_list, 'search_result': result}
 	print("hello!")
 	return render(request, 'library_app/index.html', context)
-	# return HttpResponse('ok')
+
 
 def search_books(request):
 	if request.method == 'GET':
@@ -25,7 +25,7 @@ def search_books(request):
 		context = {'book_list': searched_books}
 		return render(request, 'library_app/index.html', context)
 
-# Create your views here.
+
 def checkout(request):
 	if request.method == 'POST':
 		if request.user.is_authenticated:
@@ -40,6 +40,16 @@ def checkout(request):
 					booky.save()
 					print(f'you checked out {booky}')
 			return HttpResponse(f'so far it works. you can do it! PS the username was {username}')
-
 		else:
 			return HttpResponseRedirect('library_project:accounts/logout')
+
+
+def my_checkouts(request):
+	if request.user.is_authenticated:
+		username = request.user.username
+		my_checkouts = Book.objects.filter(checked_out_to_whom=username)
+		print(my_checkouts)
+		context = {'my_checkouts': my_checkouts, 'username': username}
+		return render(request, 'library_app/my_checkouts.html', context)
+	else:
+		return HttpResponse('checkouts! oh yeah!')
