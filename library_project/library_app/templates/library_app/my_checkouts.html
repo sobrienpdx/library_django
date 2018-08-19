@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+
+
+
+{% for book in my_checkouts %}
+<h1>{{user_info}}</h1>
+<ul>
+	<h4>You have the following books checked out:</h4>
+	<li> <h5>Title: {{book.title}}</h5>
+	<p> Author: {{book.author}}</p>
+</li>
+</ul>
+{% endfor %}
+
+
+{% endfor %}
+
+{% endblock %}
