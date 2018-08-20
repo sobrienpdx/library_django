@@ -4,17 +4,26 @@
 
 {% block content %}
 
-<h1>Hello {{username}}</h1>
-<h4>You have the following books checked out:</h4>
-<ul>
-	{% for book in my_checkouts %}
-	<li>
-		<h5>Title: {{book.title}}</h5>
-		<p> Author: {{book.author}}</p>
-	</li>
-	{% endfor %}
-</ul>
 
+<h4>You have the following books checked out:</h4>
+
+
+<form action="{%url 'library_app:return_books'  %}" method="post">
+	{% csrf_token%}
+	<ul>
+	<p></p>
+			{% for book in my_checkouts %}
+			<div class="books">
+				<li>
+					<h5>Title: {{book.title}}</h5>
+					<p> Author: {{book.author}}</p><input type="checkbox" name="book_{{book.id}}"> Return this title
+					<p></p>
+				</li>
+			</div>
+			{% endfor %}
+			</ul>
+			<button type="submit" >Confirm</button>
+</form>
 
 
 

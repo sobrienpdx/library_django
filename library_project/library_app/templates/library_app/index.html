@@ -1,7 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<p> Are you here to patronize me, mf?</p>
+
 <form action="{%url 'library_app:search_books' %}" method="get">
 	<input  id="search_box" type="text" name="search_box"  placeholder="Search..." >
 	<button id="search_submit" type="submit" >Submit</button>
@@ -12,11 +12,20 @@
 	<ul>
 	<p></p>
 			{% for book in book_list %}
-			<li>
-				<h5>Title: {{book.title}}</h5>
-				<p> Author: {{book.author}}</p><input type="checkbox" name="book_{{book.id}}">Check out this title
-				<p></p>
-			</li>
+			<div class="books">
+				<li>
+					<h5>Title: {{book.title}}</h5>
+					<p> Author: {{book.author}}</p>
+					{% if book.checked_out_to_whom == username %}
+					This book is checked out to you
+					{% elif book.checked_out_to_whom == "" %}
+					<input type="checkbox" class="books" name="book_{{book.id}}"> Check out this title
+					{% else %}
+					This book is currently checked out to another user
+					{% endif %}
+					<p></p>
+				</li>
+			</div>
 			{% endfor %}
 			</ul>
 			<button type="submit" >Check out</button>

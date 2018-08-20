@@ -1,12 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Book
 
 
 def index(request):
+	if request.user.is_authenticated:
+		username = request.user.username
+	else: username = "x"
 	book_list = Book.objects.all()
 	result = ""
-	context = {'book_list': book_list, 'search_result': result}
+	context = {'book_list': book_list, 'search_result': result, "username": username}
 	print("hello!")
 	return render(request, 'library_app/index.html', context)
 
@@ -36,9 +39,12 @@ def checkout(request):
 					book_id = book[5:]
 					print(book_id)
 					booky = Book.objects.get(id=book_id)
-					booky.checked_out_to_whom=username
-					booky.save()
+					if booky.checked_out_to_whom == "":
+						booky.checked_out_to_whom=username
+						booky.save()
+					else: return HttpResponse(f'{booky.title} is already checked out to someone else. Nice try, hacker!')
 					print(f'you checked out {booky}')
+			return redirect('library_app:my_checkouts')
 			return HttpResponse(f'so far it works. you can do it! PS the username was {username}')
 		else:
 			return HttpResponseRedirect('library_project:accounts/logout')
@@ -53,3 +59,15 @@ def my_checkouts(request):
 		return render(request, 'library_app/my_checkouts.html', context)
 	else:
 		return HttpResponse('checkouts! oh yeah!')
+
+def return_books(request):
+	for book in request.POST:
+		print(book)
+		if book.startswith('book_'):
+			book_id = book[5:]
+			print(book_id)
+			booky = Book.objects.get(id=book_id)
+			booky.checked_out_to_whom=""
+			booky.save()
+			return redirect('library_app:my_checkouts')
+	return HttpResponse('get ye back to the library')

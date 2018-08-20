@@ -1,0 +1,24 @@
+* {
+	color: blue;
+}
+
+.nav-container {
+	display: grid;
+	grid-template-columns: 1fr 1fr 3fr;
+	border: solid 1px;
+}
+
+.nav-container li {
+	padding: 1em;
+}
+h1 {
+	text-align: center;
+}
+.books {
+	border: 1px solid;
+	margin: .5em;
+	background-color: lightblue;
+}
+.books li {
+	text-decoration: none;
+}
