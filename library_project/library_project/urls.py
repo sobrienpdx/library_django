@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from library_project import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('library_app.urls')), # Note: all your app urls will start with this path

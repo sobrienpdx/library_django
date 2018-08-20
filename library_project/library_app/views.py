@@ -46,9 +46,10 @@ def checkout(request):
 					else: return HttpResponse(f'{booky.title} is already checked out to someone else. Nice try, hacker!')
 					print(f'you checked out {booky}')
 			return redirect('library_app:my_checkouts')
-			return HttpResponse(f'so far it works. you can do it! PS the username was {username}')
 		else:
-			return HttpResponseRedirect('library_project:accounts/logout')
+			# return redirect('library_project:accounts/login')
+			# return redirect('http://localhost:8000/accounts/login/')
+			return redirect('login')
 
 
 def my_checkouts(request):
@@ -60,6 +61,7 @@ def my_checkouts(request):
 		return render(request, 'library_app/my_checkouts.html', context)
 	else:
 		return HttpResponse('checkouts! oh yeah!')
+
 
 def return_books(request):
 	for book in request.POST:
