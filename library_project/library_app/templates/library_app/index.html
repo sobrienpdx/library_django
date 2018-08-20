@@ -9,12 +9,12 @@
 
 <form action="{%url 'library_app:checkout'  %}" method="post">
 	{% csrf_token%}
-	<ul>
+	<ul class="no_bullets">
 	<p></p>
 			{% for book in book_list %}
 			<div class="books">
 				<li>
-					<h5>Title: {{book.title}}</h5>
+					<h3>Title: {{book.title}}</h3>
 					<p> Author: {{book.author}}</p>
 					{% if book.checked_out_to_whom == username %}
 					This book is checked out to you

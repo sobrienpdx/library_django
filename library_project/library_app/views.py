@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Book
-
+from datetime import datetime
+from datetime import timedelta #lets you change the date to make a due date 20 days from now
 
 def index(request):
 	if request.user.is_authenticated:
@@ -34,13 +35,13 @@ def checkout(request):
 		if request.user.is_authenticated:
 			username = request.user.username
 			for book in request.POST:
-				print(book)
 				if book.startswith('book_'):
 					book_id = book[5:]
-					print(book_id)
 					booky = Book.objects.get(id=book_id)
 					if booky.checked_out_to_whom == "":
 						booky.checked_out_to_whom=username
+						booky.checked_out_when=datetime.now()+timedelta(20)#adds 20 days from today for due date
+						print(f'the day is {datetime.now()}')
 						booky.save()
 					else: return HttpResponse(f'{booky.title} is already checked out to someone else. Nice try, hacker!')
 					print(f'you checked out {booky}')
@@ -69,5 +70,5 @@ def return_books(request):
 			booky = Book.objects.get(id=book_id)
 			booky.checked_out_to_whom=""
 			booky.save()
-			return redirect('library_app:my_checkouts')
+	return redirect('library_app:my_checkouts')
 	return HttpResponse('get ye back to the library')

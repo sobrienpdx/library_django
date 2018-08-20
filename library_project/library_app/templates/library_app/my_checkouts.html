@@ -10,19 +10,21 @@
 
 <form action="{%url 'library_app:return_books'  %}" method="post">
 	{% csrf_token%}
-	<ul>
+	<ul class="no_bullets">
 	<p></p>
 			{% for book in my_checkouts %}
 			<div class="books">
 				<li>
-					<h5>Title: {{book.title}}</h5>
-					<p> Author: {{book.author}}</p><input type="checkbox" name="book_{{book.id}}"> Return this title
+					<h3>Title: {{book.title}}</h3>
+					<p> Author: {{book.author}}</p>
+					<p> Due: {{book.checked_out_when|date:"D, d M Y" }}
+					<input type="checkbox" name="book_{{book.id}}"> Return this title
 					<p></p>
 				</li>
 			</div>
 			{% endfor %}
 			</ul>
-			<button type="submit" >Confirm</button>
+			<button type="submit" >Return selected titles</button>
 </form>
 
 
